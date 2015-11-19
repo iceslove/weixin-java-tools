@@ -23,13 +23,13 @@ import java.util.List;
  * http://mp.weixin.qq.com/wiki/index.php?title=接收语音识别结果
  * </pre>
  *
- * @author chanjarster
+ * @author chanjarster  gad
  */
 @XStreamAlias("xml")
 public class WxMpXmlMessage implements Serializable {
 
   ///////////////////////
-  // 以下都是微信推送过来的消息的xml的element所对应的属性
+  // 以下都是微信推送过来的消息的xml的ent所对应的属性
   ///////////////////////
 
   @XStreamAlias("ToUserName")
@@ -102,6 +102,20 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("EventKey")
   @XStreamConverter(value=XStreamCDataConverter.class)
   private String eventKey;
+  
+  //<CardId><![CDATA[cardid]]></CardId> 
+  //<UserCardCode><![CDATA[12312312]]></UserCardCode>
+  
+  //from gad (拓展卡卷事件)
+  @XStreamAlias("CardId")
+  @XStreamConverter(value=XStreamCDataConverter.class)
+  private String cardId;
+  
+  //from gad (拓展卡卷事件)
+  @XStreamAlias("UserCardCode")
+  @XStreamConverter(value=XStreamCDataConverter.class)
+  private String userCardCode;
+
 
   @XStreamAlias("Ticket")
   @XStreamConverter(value=XStreamCDataConverter.class)
@@ -329,6 +343,26 @@ public class WxMpXmlMessage implements Serializable {
   public void setEventKey(String eventKey) {
     this.eventKey = eventKey;
   }
+
+  //from gad
+  public String getCardId() {
+    return cardId;
+  }
+  
+  public void setCardId(String cardId) {
+    this.cardId = cardId;
+  }
+  
+  
+  //from gad
+  public String getUserCardCode() {
+    return userCardCode;
+  }
+ 
+  public void setUserCardCode(String userCardCode) {
+    this.userCardCode = userCardCode;
+  }
+
 
   public String getTicket() {
     return ticket;
@@ -642,6 +676,8 @@ public class WxMpXmlMessage implements Serializable {
         ", url='" + url + '\'' +
         ", event='" + event + '\'' +
         ", eventKey='" + eventKey + '\'' +
+        ", cardId='" + cardId + '\'' +
+        ", userCardCode='" + userCardCode + '\'' +
         ", ticket='" + ticket + '\'' +
         ", latitude=" + latitude +
         ", longitude=" + longitude +
